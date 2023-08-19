@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 
 import { Product } from '../Types';
 
@@ -12,7 +12,7 @@ export class ProductRepositiory {
     return this.products;
   }
 
-  getProductById(id) {
+  getProductById(id: number) {
     return this.products.find((product) => product.id === id);
   }
 }

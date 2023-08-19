@@ -1,186 +1,216 @@
 export enum CAMPAIGN {
-    FIXED_AMOUNT = 'fixedAmount',
-    PERCENTAGE = 'percentage',
-    PERCENTAGE_WITH_CATEGORY = 'percentageWithCategory',
-    POINT_DISCOUNT = 'pointDiscount',
-    BLOCK = 'block'
+  FIXED_AMOUNT = 'fixedAmount',
+  PERCENTAGE = 'percentage',
+  PERCENTAGE_WITH_CATEGORY = 'percentageWithCategory',
+  POINT_DISCOUNT = 'pointDiscount',
+  BLOCK = 'block',
 }
 
 export const MAX_POINT_DISCOUNT_PERCENTAGE = 20;
 
 interface CouponInterface {
-    id: number;
-    campaign: CAMPAIGN;
-    description: string;
-    category: string;
+  id: number;
+  campaign: CAMPAIGN;
+  description: string;
+  category: string;
 }
 
 type FixedAmountCouponType = CouponInterface & {
-    amount: number;
+  amount: number;
 };
 
 type PercentageCouponType = CouponInterface & {
-    percentage: number;
+  percentage: number;
 };
 
 type PercentageWithCategoryCouponType = PercentageCouponType & {
-    category: string;
+  category: string;
 };
 
 type PointDiscountCouponType = CouponInterface & {
-    pointsUsed: number;
+  pointsUsed: number;
 };
 
 type BlockCouponType = CouponInterface & {
-    block: number;
-    discountPerBlock: number;
+  block: number;
+  discountPerBlock: number;
 };
 
-type CouponType = FixedAmountCouponType | PercentageCouponType | PercentageWithCategoryCouponType | PointDiscountCouponType | BlockCouponType;
+type CouponType =
+  | FixedAmountCouponType
+  | PercentageCouponType
+  | PercentageWithCategoryCouponType
+  | PointDiscountCouponType
+  | BlockCouponType;
 
-export type { FixedAmountCouponType, PercentageCouponType, PercentageWithCategoryCouponType, PointDiscountCouponType, BlockCouponType, CouponType };
+export type {
+  FixedAmountCouponType,
+  PercentageCouponType,
+  PercentageWithCategoryCouponType,
+  PointDiscountCouponType,
+  BlockCouponType,
+  CouponType,
+};
 
 abstract class AbstractCoupon implements CouponInterface {
-    id: number;
-    campaign: CAMPAIGN;
-    description: string;
-    category: string;
+  id: number;
+  campaign: CAMPAIGN;
+  description: string;
+  category: string;
 
-    constructor(coupon: CouponInterface) {
-        this.id = coupon.id;
-        this.campaign = coupon.campaign;
-        this.description = coupon.description;
-        this.category = coupon.category;
-    }
+  constructor(coupon: CouponInterface) {
+    this.id = coupon.id;
+    this.campaign = coupon.campaign;
+    this.description = coupon.description;
+    this.category = coupon.category;
+  }
 
-    public getId(): number {
-        return this.id;
-    }
+  public getId(): number {
+    return this.id;
+  }
 
-    public setId(id: number): void {
-        this.id = id;
-    }
+  public setId(id: number): void {
+    this.id = id;
+  }
 
-    public getCampaign(): CAMPAIGN {
-        return this.campaign;
-    }
+  public getCampaign(): CAMPAIGN {
+    return this.campaign;
+  }
 
-    public setCampaign(campaign: CAMPAIGN): void {
-        this.campaign = campaign;
-    }
+  public setCampaign(campaign: CAMPAIGN): void {
+    this.campaign = campaign;
+  }
 
-    public getDescription(): string {
-        return this.description;
-    }
+  public getDescription(): string {
+    return this.description;
+  }
 
-    public setDescription(description: string): void {
-        this.description = description;
-    }
+  public setDescription(description: string): void {
+    this.description = description;
+  }
 
-    public getCategory(): string {
-        return this.category;
-    }
+  public getCategory(): string {
+    return this.category;
+  }
 
-    public setCategory(category: string): void {
-        this.category = category;
-    }
+  public setCategory(category: string): void {
+    this.category = category;
+  }
 }
 
-class FixedAmountCoupon extends AbstractCoupon implements FixedAmountCoupon{
-    amount: number;
+class FixedAmountCoupon extends AbstractCoupon implements FixedAmountCoupon {
+  amount: number;
 
-    constructor(coupon: FixedAmountCouponType) {
-        super(coupon);
-        this.amount = coupon.amount;
-    }
+  constructor(coupon: FixedAmountCouponType) {
+    super(coupon);
+    this.amount = coupon.amount;
+  }
 
-    public getAmount(): number {
-        return this.amount;
-    }
+  public getAmount(): number {
+    return this.amount;
+  }
 
-    public setAmount(amount: number): void {
-        this.amount = amount;
-    }
+  public setAmount(amount: number): void {
+    this.amount = amount;
+  }
 }
 
-class PercentageCoupon extends AbstractCoupon implements PercentageCouponType{
-    percentage: number;
+class PercentageCoupon extends AbstractCoupon implements PercentageCouponType {
+  percentage: number;
 
-    constructor(coupon: PercentageCouponType) {
-        super(coupon);
-        this.percentage = coupon.percentage;
-    }
+  constructor(coupon: PercentageCouponType) {
+    super(coupon);
+    this.percentage = coupon.percentage;
+  }
 
-    public getPercentage(): number {
-        return this.percentage;
-    }
+  public getPercentage(): number {
+    return this.percentage;
+  }
 
-    public setPercentage(percentage: number): void {
-        this.percentage = percentage;
-    }
+  public setPercentage(percentage: number): void {
+    this.percentage = percentage;
+  }
 }
 
-class PercentageWithCategoryCoupon extends PercentageCoupon implements PercentageWithCategoryCouponType{
-    category: string;
+class PercentageWithCategoryCoupon
+  extends PercentageCoupon
+  implements PercentageWithCategoryCouponType
+{
+  category: string;
 
-    constructor(coupon: PercentageWithCategoryCouponType) {
-        super(coupon);
-        this.category = coupon.category;
-    }
+  constructor(coupon: PercentageWithCategoryCouponType) {
+    super(coupon);
+    this.category = coupon.category;
+  }
 
-    public getCategory(): string {
-        return this.category;
-    }
+  public getCategory(): string {
+    return this.category;
+  }
 
-    public setCategory(category: string): void {
-        this.category = category;
-    }
+  public setCategory(category: string): void {
+    this.category = category;
+  }
 }
 
-class PointDiscountCoupon extends AbstractCoupon implements PointDiscountCouponType{
-    pointsUsed: number;
+class PointDiscountCoupon
+  extends AbstractCoupon
+  implements PointDiscountCouponType
+{
+  pointsUsed: number;
 
-    constructor(coupon: PointDiscountCouponType) {
-        super(coupon);
-        this.pointsUsed = coupon.pointsUsed;
-    }
+  constructor(coupon: PointDiscountCouponType) {
+    super(coupon);
+    this.pointsUsed = coupon.pointsUsed;
+  }
 
-    public getPointsUsed(): number {
-        return this.pointsUsed;
-    }
+  public getPointsUsed(): number {
+    return this.pointsUsed;
+  }
 
-    public setPointsUsed(pointsUsed: number): void {
-        this.pointsUsed = pointsUsed;
-    }
+  public setPointsUsed(pointsUsed: number): void {
+    this.pointsUsed = pointsUsed;
+  }
 }
 
-class BlockCoupon extends AbstractCoupon implements BlockCouponType{
-    block: number;
-    discountPerBlock: number;
+class BlockCoupon extends AbstractCoupon implements BlockCouponType {
+  block: number;
+  discountPerBlock: number;
 
-    constructor(coupon: BlockCouponType) {
-        super(coupon);
-        this.block = coupon.block;
-        this.discountPerBlock = coupon.discountPerBlock;
-    }
+  constructor(coupon: BlockCouponType) {
+    super(coupon);
+    this.block = coupon.block;
+    this.discountPerBlock = coupon.discountPerBlock;
+  }
 
-    public getBlock(): number {
-        return this.block;
-    }
+  public getBlock(): number {
+    return this.block;
+  }
 
-    public setBlock(block: number): void {
-        this.block = block;
-    }
+  public setBlock(block: number): void {
+    this.block = block;
+  }
 
-    public getDiscountPerBlock(): number {
-        return this.discountPerBlock;
-    }
+  public getDiscountPerBlock(): number {
+    return this.discountPerBlock;
+  }
 
-    public setDiscountPerBlock(discount: number): void {
-        this.discountPerBlock = discount;
-    }
+  public setDiscountPerBlock(discount: number): void {
+    this.discountPerBlock = discount;
+  }
 }
 
-type Coupon = FixedAmountCoupon | PercentageCoupon | PercentageWithCategoryCoupon | PointDiscountCoupon | BlockCoupon;
+type Coupon =
+  | FixedAmountCoupon
+  | PercentageCoupon
+  | PercentageWithCategoryCoupon
+  | PointDiscountCoupon
+  | BlockCoupon;
 
-export { FixedAmountCoupon, PercentageCoupon, PercentageWithCategoryCoupon, PointDiscountCoupon, BlockCoupon, Coupon };
+export {
+  FixedAmountCoupon,
+  PercentageCoupon,
+  PercentageWithCategoryCoupon,
+  PointDiscountCoupon,
+  BlockCoupon,
+  Coupon,
+};

@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 
 import {
   CAMPAIGN,
@@ -7,30 +7,46 @@ import {
   PercentageCoupon,
   PercentageWithCategoryCoupon,
   PointDiscountCoupon,
-  BlockCoupon
+  BlockCoupon,
+  CouponType,
+  FixedAmountCouponType,
+  PercentageCouponType,
+  PercentageWithCategoryCouponType,
+  PointDiscountCouponType,
+  BlockCouponType,
 } from '../Types';
 
 export class CouponRepositiory {
-  coupons: Coupon[];
+  coupons: Coupon[] = [];
   constructor() {
     let rawCoupons = JSON.parse(fs.readFileSync('./products.json', 'utf8'));
-    rawCoupons.forEach((coupon) => {
-      switch (coupon.campaign) {
+    rawCoupons.forEach((rawCoupon: CouponType) => {
+      switch (rawCoupon.campaign) {
         case CAMPAIGN.FIXED_AMOUNT:
-          this.coupons.push(new FixedAmountCoupon(coupon));
+          const rawFixedAmountCoupon = rawCoupon as FixedAmountCouponType;
+          this.coupons.push(new FixedAmountCoupon(rawFixedAmountCoupon));
           break;
         case CAMPAIGN.PERCENTAGE:
-          this.coupons.push(new PercentageCoupon(coupon));
+          const rawPercentageCoupon = rawCoupon as PercentageCouponType;
+          this.coupons.push(new PercentageCoupon(rawPercentageCoupon));
           break;
         case CAMPAIGN.PERCENTAGE_WITH_CATEGORY:
-          this.coupons.push(new PercentageWithCategoryCoupon(coupon));
+          const rawPercentageWithCategoryCoupon =
+            rawCoupon as PercentageWithCategoryCouponType;
+          this.coupons.push(
+            new PercentageWithCategoryCoupon(rawPercentageWithCategoryCoupon)
+          );
           break;
         case CAMPAIGN.POINT_DISCOUNT:
-          this.coupons.push(new PointDiscountCoupon(coupon));
+          const rawPointDiscountCoupon = rawCoupon as PointDiscountCouponType;
+          this.coupons.push(new PointDiscountCoupon(rawPointDiscountCoupon));
           break;
         case CAMPAIGN.BLOCK:
-          this.coupons.push(new BlockCoupon(coupon));
+          const rawBlockCoupon = rawCoupon as BlockCouponType;
+          this.coupons.push(new BlockCoupon(rawBlockCoupon));
           break;
+        default:
+          throw new Error('Invalid campaign type');
       }
     });
   }
