@@ -6,9 +6,9 @@ export class ProductRepository {
   products: Product[];
   constructor() {
     this.products = JSON.parse(
-      readFileSync('./Repository/products.json', 'utf8')
+      readFileSync('./mock/products.json', 'utf8')
     );
-    console.log('Product loaded from file successfully 🛍️');
+    console.log('Products loaded from file successfully 🛍️');
   }
 
   getProducts() {

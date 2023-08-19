@@ -19,9 +19,7 @@ import {
 export class CouponRepositiory {
   coupons: Coupon[] = [];
   constructor() {
-    let rawCoupons = JSON.parse(
-      readFileSync('./Repository/coupons.json', 'utf8')
-    );
+    let rawCoupons = JSON.parse(readFileSync('./mock/coupons.json', 'utf8'));
     rawCoupons.forEach((rawCoupon: CouponType) => {
       switch (rawCoupon.campaign) {
         case CAMPAIGN.FIXED_AMOUNT:
