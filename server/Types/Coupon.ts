@@ -1,3 +1,13 @@
+import { PRODUCT_CATEGORY } from './Product';
+
+const MINIMUM_BLOCK_SIZE = 10;
+
+export enum COUPON_CATEGORY {
+  COUPON = 'coupon',
+  ONTOP = 'onTop',
+  SEASONAL = 'seasonal',
+}
+
 export enum CAMPAIGN {
   FIXED_AMOUNT = 'fixedAmount',
   PERCENTAGE = 'percentage',
@@ -12,7 +22,7 @@ interface CouponInterface {
   id: number;
   campaign: CAMPAIGN;
   description: string;
-  category: string;
+  category: COUPON_CATEGORY;
 }
 
 type FixedAmountCouponType = CouponInterface & {
@@ -24,7 +34,7 @@ type PercentageCouponType = CouponInterface & {
 };
 
 type PercentageWithCategoryCouponType = PercentageCouponType & {
-  category: string;
+  productCategory: PRODUCT_CATEGORY;
 };
 
 type PointDiscountCouponType = CouponInterface & {
@@ -56,13 +66,13 @@ abstract class AbstractCoupon implements CouponInterface {
   id: number;
   campaign: CAMPAIGN;
   description: string;
-  category: string;
+  category: COUPON_CATEGORY;
 
   constructor(coupon: CouponInterface) {
-    this.id = coupon.id;
-    this.campaign = coupon.campaign;
-    this.description = coupon.description;
-    this.category = coupon.category;
+    this.id = coupon.id ?? Math.floor(Math.random() * 1000000);
+    this.campaign = coupon.campaign ?? CAMPAIGN.FIXED_AMOUNT;
+    this.description = coupon.description ?? '';
+    this.category = coupon.category ?? COUPON_CATEGORY.COUPON;
   }
 
   public getId(): number {
@@ -93,7 +103,7 @@ abstract class AbstractCoupon implements CouponInterface {
     return this.category;
   }
 
-  public setCategory(category: string): void {
+  public setCategory(category: COUPON_CATEGORY): void {
     this.category = category;
   }
 }
@@ -103,7 +113,7 @@ class FixedAmountCoupon extends AbstractCoupon implements FixedAmountCoupon {
 
   constructor(coupon: FixedAmountCouponType) {
     super(coupon);
-    this.amount = coupon.amount;
+    this.amount = coupon.amount ?? 0;
   }
 
   public getAmount(): number {
@@ -120,7 +130,7 @@ class PercentageCoupon extends AbstractCoupon implements PercentageCouponType {
 
   constructor(coupon: PercentageCouponType) {
     super(coupon);
-    this.percentage = coupon.percentage;
+    this.percentage = coupon.percentage ?? 0;
   }
 
   public getPercentage(): number {
@@ -136,19 +146,19 @@ class PercentageWithCategoryCoupon
   extends PercentageCoupon
   implements PercentageWithCategoryCouponType
 {
-  category: string;
+  productCategory: PRODUCT_CATEGORY;
 
   constructor(coupon: PercentageWithCategoryCouponType) {
     super(coupon);
-    this.category = coupon.category;
+    this.productCategory = coupon.productCategory ?? PRODUCT_CATEGORY.HOUSEHOLD;
   }
 
-  public getCategory(): string {
-    return this.category;
+  public getProductCategory(): PRODUCT_CATEGORY {
+    return this.productCategory;
   }
 
-  public setCategory(category: string): void {
-    this.category = category;
+  public setProductCategory(productCategory: PRODUCT_CATEGORY): void {
+    this.productCategory = productCategory;
   }
 }
 
@@ -160,7 +170,7 @@ class PointDiscountCoupon
 
   constructor(coupon: PointDiscountCouponType) {
     super(coupon);
-    this.pointsUsed = coupon.pointsUsed;
+    this.pointsUsed = coupon.pointsUsed ?? 0;
   }
 
   public getPointsUsed(): number {
@@ -178,8 +188,8 @@ class BlockCoupon extends AbstractCoupon implements BlockCouponType {
 
   constructor(coupon: BlockCouponType) {
     super(coupon);
-    this.block = coupon.block;
-    this.discountPerBlock = coupon.discountPerBlock;
+    this.block = coupon.block ?? MINIMUM_BLOCK_SIZE;
+    this.discountPerBlock = coupon.discountPerBlock ?? 0;
   }
 
   public getBlock(): number {
