@@ -19,7 +19,9 @@ import {
 export class CouponRepositiory {
   coupons: Coupon[] = [];
   constructor() {
-    let rawCoupons = JSON.parse(readFileSync('./products.json', 'utf8'));
+    let rawCoupons = JSON.parse(
+      readFileSync('./Repository/coupons.json', 'utf8')
+    );
     rawCoupons.forEach((rawCoupon: CouponType) => {
       switch (rawCoupon.campaign) {
         case CAMPAIGN.FIXED_AMOUNT:
@@ -49,6 +51,7 @@ export class CouponRepositiory {
           throw new Error('Invalid campaign type');
       }
     });
+    console.log('Coupons loaded from file successfully 🎫');
   }
 
   getCoupons() {
