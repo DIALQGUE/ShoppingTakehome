@@ -1,142 +1,142 @@
 [
-    {
-        "id": "1",
-        "name": "T-Shirt",
-        "price": "150",
-        "description": "This is a T-Shirt",
-        "category": "Fashion"
-    },
-    {
-        "id": "2",
-        "name": "Shirt",
-        "price": "200",
-        "description": "This is a Shirt",
-        "category": "Fashion"
-    },
-    {
-        "id": "3",
-        "name": "Jeans",
-        "price": "250",
-        "description": "This is a Jeans",
-        "category": "Fashion"
-    },
-    {
-        "id": "4",
-        "name": "Shoes",
-        "price": "100",
-        "description": "This is a Shoes",
-        "category": "Fashion"
-    },
-    {
-        "id": "5",
-        "name": "Bag",
-        "price": "300",
-        "description": "This is a Bag",
-        "category": "Fashion"
-    },
-    {
-        "id": "6",
-        "name": "Mobile Phone",
-        "price": "8000",
-        "description": "This is a Mobile Phone",
-        "category": "Electronics"
-    },
-    {
-        "id": "7",
-        "name": "Laptop",
-        "price": "15000",
-        "description": "This is a Laptop",
-        "category": "Electronics"
-    },
-    {
-        "id": "8",
-        "name": "Wireless Earphones",
-        "price": "2000",
-        "description": "This is a Wireless Earphones",
-        "category": "Electronics"
-    },
-    {
-        "id": "9",
-        "name": "Headphones",
-        "price": "1000",
-        "description": "This is a Headphones",
-        "category": "Electronics"
-    },
-    {
-        "id": "10",
-        "name": "Television",
-        "price": "20000",
-        "description": "This is a Television",
-        "category": "Electronics"
-    },
-    {
-        "id": "11",
-        "name": "Sofa",
-        "price": "6000",
-        "description": "This is a Sofa",
-        "category": "Furniture"
-    },
-    {
-        "id": "12",
-        "name": "Table",
-        "price": "5000",
-        "description": "This is a Table",
-        "category": "Furniture"
-    },
-    {
-        "id": "13",
-        "name": "Chair",
-        "price": "2000",
-        "description": "This is a Chair",
-        "category": "Furniture"
-    },
-    {
-        "id": "14",
-        "name": "Bed",
-        "price": "15000",
-        "description": "This is a Bed",
-        "category": "Furniture"
-    },
-    {
-        "id": "15",
-        "name": "Dining Table",
-        "price": "10000",
-        "description": "This is a Dining Table",
-        "category": "Furniture"
-    },
-    {
-        "id": "16",
-        "name": "Bleach",
-        "price": "100",
-        "description": "This is a Bleach",
-        "category": "Household"
-    },
-    {
-        "id": "17",
-        "name": "Detergent",
-        "price": "200",
-        "description": "This is a Detergent",
-        "category": "Household"
-    },
-    {
-        "id": "18",
-        "name": "Dishwasher",
-        "price": "300",
-        "description": "This is a Dishwasher",
-        "category": "Household"
-    },
-    {
-        "id": "19",
-        "name": "Floor Cleaner",
-        "price": "400",
-        "description": "This is a Floor Cleaner",
-        "category": "Household"
-    },
-    {
-        "id": "20",
-        "name": "Toilet Cleaner",
-        "price": "500",
-        "description": "This is a Toilet Cleaner",
-        "category": "Household"
-    }
+  {
+    "id": 1,
+    "name": "T-Shirt",
+    "price": 150,
+    "description": "This is a T-Shirt",
+    "category": "Fashion"
+  },
+  {
+    "id": 2,
+    "name": "Shirt",
+    "price": 200,
+    "description": "This is a Shirt",
+    "category": "Fashion"
+  },
+  {
+    "id": 3,
+    "name": "Jeans",
+    "price": 250,
+    "description": "This is a Jeans",
+    "category": "Fashion"
+  },
+  {
+    "id": 4,
+    "name": "Shoes",
+    "price": 100,
+    "description": "This is a Shoes",
+    "category": "Fashion"
+  },
+  {
+    "id": 5,
+    "name": "Bag",
+    "price": 300,
+    "description": "This is a Bag",
+    "category": "Fashion"
+  },
+  {
+    "id": 6,
+    "name": "Mobile Phone",
+    "price": 8000,
+    "description": "This is a Mobile Phone",
+    "category": "Electronics"
+  },
+  {
+    "id": 7,
+    "name": "Laptop",
+    "price": 15000,
+    "description": "This is a Laptop",
+    "category": "Electronics"
+  },
+  {
+    "id": 8,
+    "name": "Wireless Earphones",
+    "price": 2000,
+    "description": "This is a Wireless Earphones",
+    "category": "Electronics"
+  },
+  {
+    "id": 9,
+    "name": "Headphones",
+    "price": 1000,
+    "description": "This is a Headphones",
+    "category": "Electronics"
+  },
+  {
+    "id": 10,
+    "name": "Television",
+    "price": 20000,
+    "description": "This is a Television",
+    "category": "Electronics"
+  },
+  {
+    "id": 11,
+    "name": "Sofa",
+    "price": 6000,
+    "description": "This is a Sofa",
+    "category": "Furniture"
+  },
+  {
+    "id": 12,
+    "name": "Table",
+    "price": 5000,
+    "description": "This is a Table",
+    "category": "Furniture"
+  },
+  {
+    "id": 13,
+    "name": "Chair",
+    "price": 2000,
+    "description": "This is a Chair",
+    "category": "Furniture"
+  },
+  {
+    "id": 14,
+    "name": "Bed",
+    "price": 15000,
+    "description": "This is a Bed",
+    "category": "Furniture"
+  },
+  {
+    "id": 15,
+    "name": "Dining Table",
+    "price": 10000,
+    "description": "This is a Dining Table",
+    "category": "Furniture"
+  },
+  {
+    "id": 16,
+    "name": "Bleach",
+    "price": 100,
+    "description": "This is a Bleach",
+    "category": "Household"
+  },
+  {
+    "id": 17,
+    "name": "Detergent",
+    "price": 200,
+    "description": "This is a Detergent",
+    "category": "Household"
+  },
+  {
+    "id": 18,
+    "name": "Dishwasher",
+    "price": 300,
+    "description": "This is a Dishwasher",
+    "category": "Household"
+  },
+  {
+    "id": 19,
+    "name": "Floor Cleaner",
+    "price": 400,
+    "description": "This is a Floor Cleaner",
+    "category": "Household"
+  },
+  {
+    "id": 20,
+    "name": "Toilet Cleaner",
+    "price": 500,
+    "description": "This is a Toilet Cleaner",
+    "category": "Household"
+  }
 ]
