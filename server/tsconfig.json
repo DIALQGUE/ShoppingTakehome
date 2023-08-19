@@ -1,33 +1,24 @@
 {
-  "compilerOptions": {
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "target": "es2016",
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noImplicitAny": true,
-      "sourceMap": false,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-          "*": [
-              "./node_modules/*"
-          ],
-          "@Types": [
-              "./Types"
-          ],
-          "@Repositories": [
-              "./Repository"
-          ],
-      }
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   },
-  "include": [
-      "**/*.ts"
-  ],
-  "exclude": [
-      "node_modules", "dist"
-  ],
-  "type": [
-      "node"
-  ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es2016",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./node_modules/*"],
+      "@Types": ["./Types"],
+      "@Repositories": ["./Repository"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.json"],
+  "exclude": ["node_modules", "dist"],
+  "type": ["node"]
 }
