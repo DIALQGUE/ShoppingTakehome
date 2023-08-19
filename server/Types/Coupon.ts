@@ -1,6 +1,7 @@
 import { PRODUCT_CATEGORY } from './Product';
 
 const MINIMUM_BLOCK_SIZE = 10;
+const POINT_TO_DISCOUNT_RATIO = 1;
 
 export enum COUPON_CATEGORY {
   COUPON = 'coupon',
@@ -43,7 +44,7 @@ type PointDiscountCouponType = CouponInterface & {
 
 type BlockCouponType = CouponInterface & {
   block: number;
-  discountPerBlock: number;
+  amountPerBlock: number;
 };
 
 type CouponType =
@@ -171,6 +172,9 @@ class PointDiscountCoupon
   constructor(coupon: PointDiscountCouponType) {
     super(coupon);
     this.pointsUsed = coupon.pointsUsed ?? 0;
+    this.description = `Points discount use ${this.pointsUsed} points to get ${
+      this.pointsUsed * POINT_TO_DISCOUNT_RATIO
+    } discount.`;
   }
 
   public getPointsUsed(): number {
@@ -184,12 +188,12 @@ class PointDiscountCoupon
 
 class BlockCoupon extends AbstractCoupon implements BlockCouponType {
   block: number;
-  discountPerBlock: number;
+  amountPerBlock: number;
 
   constructor(coupon: BlockCouponType) {
     super(coupon);
     this.block = coupon.block ?? MINIMUM_BLOCK_SIZE;
-    this.discountPerBlock = coupon.discountPerBlock ?? 0;
+    this.amountPerBlock = coupon.amountPerBlock ?? 0;
   }
 
   public getBlock(): number {
@@ -200,12 +204,12 @@ class BlockCoupon extends AbstractCoupon implements BlockCouponType {
     this.block = block;
   }
 
-  public getDiscountPerBlock(): number {
-    return this.discountPerBlock;
+  public getAmountPerBlock(): number {
+    return this.amountPerBlock;
   }
 
-  public setDiscountPerBlock(discount: number): void {
-    this.discountPerBlock = discount;
+  public setAmountPerBlock(discount: number): void {
+    this.amountPerBlock = discount;
   }
 }
 

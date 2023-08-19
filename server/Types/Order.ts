@@ -138,7 +138,7 @@ export class Order implements OrderType {
         const blockCoupon = coupon as BlockCoupon;
         const blockNumber = Math.floor(currentPrice / blockCoupon.getBlock());
         currentPrice =
-          currentPrice - blockNumber * blockCoupon.getDiscountPerBlock();
+          currentPrice - blockNumber * blockCoupon.getAmountPerBlock();
         break;
       default:
         throw new Error('Invalid coupon campaign type');
