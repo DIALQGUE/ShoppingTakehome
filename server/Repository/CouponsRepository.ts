@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 
 import {
   CAMPAIGN,
@@ -14,12 +14,12 @@ import {
   PercentageWithCategoryCouponType,
   PointDiscountCouponType,
   BlockCouponType,
-} from '../Types';
+} from '@Types';
 
 export class CouponRepositiory {
   coupons: Coupon[] = [];
   constructor() {
-    let rawCoupons = JSON.parse(fs.readFileSync('./products.json', 'utf8'));
+    let rawCoupons = JSON.parse(readFileSync('./products.json', 'utf8'));
     rawCoupons.forEach((rawCoupon: CouponType) => {
       switch (rawCoupon.campaign) {
         case CAMPAIGN.FIXED_AMOUNT:

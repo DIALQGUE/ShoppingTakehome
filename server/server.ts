@@ -1,8 +1,8 @@
-import express from 'express';
+import express, { Express, Request, Response } from 'express';
 
-const app = express();
+const app: Express = express();
 
-app.get('/products', (req, res) => {
+app.get('/products', (req: Request, res: Response) => {
   const products = {};
   res.json(products);
 });
