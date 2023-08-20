@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpecs } from './swagger-spec';
@@ -16,6 +17,7 @@ const couponRepository = new CouponRepositiory();
 const orderRepository = new OrderRepository();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use(
   '/docs',
@@ -72,7 +74,6 @@ app.post('/checkout', (req: Request, res: Response) => {
     totalPrice: totalPrice,
     netPrice: netPrice,
   });
-  console.log(order);
   return res.json(order);
 });
 
