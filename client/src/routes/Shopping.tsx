@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Stepper, Step, StepLabel } from '@mui/material';
+import { StepFooter } from '../components/StepFooter';
+import { SelectProducts, SelectCoupons, ConfirmOrder } from '../containers';
 
 const steps = ['Pick Products', 'Pick Coupons', 'Confirm Order'];
 
@@ -29,6 +31,9 @@ export const Shopping = () => {
           );
         })}
       </Stepper>
+      {activeStep === 0 && <SelectProducts />}
+      {activeStep === 1 && <SelectCoupons />}
+      {activeStep === 2 && <ConfirmOrder />}
       <StepFooter
         stepsLength={steps.length}
         activeStep={activeStep}
