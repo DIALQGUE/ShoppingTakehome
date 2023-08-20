@@ -39,6 +39,45 @@ components:
         category:
           type: string
           description: The coupon's category.
+    rawOrderSchema:
+      type: object
+      properties:
+        productIds:
+          type: array
+          items:
+            type: number
+            description: IDs of selected products
+        couponIds:
+          type: array
+          items:
+            type: number
+            description: IDs of selected coupons
+        totalPrice:
+          type: number
+          description: Tolal price from selected products before discount
+        netPrice:
+          type: number
+          description: Net price from selected products after discount from selected coupons
+    orderSchema: 
+      type: object
+      properties:
+        id: 
+          type: number
+          description: ID of the order
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/productSchema'
+        coupons:
+          type: array
+          items:
+            $ref: '#/components/schemas/couponSchema'
+        totalPrice:
+          type: number
+          description: tolal price from selected products before discount
+        netPrice:
+          type: number
+          description: net price from selected products after discount from selected coupons
 
               
 paths:
@@ -178,5 +217,24 @@ paths:
               schema:
                 type: string
               example: Internal server error
+  /checkout:
+    post:
+      description: Use to create new order with selected products and coupons
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/rawOrderSchema'
+            name: order
+            required: true
+      responses:
+        '200':
+          description: A created order
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/orderSchema'
+          
 
                 

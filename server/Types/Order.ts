@@ -11,11 +11,11 @@ import {
 } from './Coupon';
 
 export type OrderType = {
-  id: number;
+  id: number | undefined;
   products: Product[];
   coupons: Coupon[];
-  totalPrice: number;
-  netPrice: number;
+  totalPrice: number | undefined;
+  netPrice: number | undefined;
 };
 
 export class Order implements OrderType {

@@ -52,11 +52,15 @@ export class CouponRepositiory {
     console.log('Coupons loaded from file successfully 🎫');
   }
 
-  getCoupons() {
+  public getCoupons() {
     return this.coupons;
   }
 
-  getCouponById(id: number) {
+  public getCouponsByIds(ids: number[]) {
+    return this.coupons.filter((coupon) => ids.includes(coupon.id));
+  }
+
+  public getCouponById(id: number) {
     return this.coupons.find((coupon) => coupon.id === id);
   }
 }
