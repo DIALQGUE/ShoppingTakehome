@@ -36,6 +36,7 @@ interface OrderContextType {
   };
   orderData: {
     priceBeforeOnTop: number;
+    priceBeforeSeasonal: number;
   };
 }
 
@@ -53,6 +54,7 @@ const OrderContext = createContext<OrderContextType>({
   },
   orderData: {
     priceBeforeOnTop: 0,
+    priceBeforeSeasonal: 0,
   },
 });
 
@@ -63,6 +65,7 @@ export const useOrderContext = (): OrderContextType => {
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [order, setOrder] = useState(initialOrder);
   let priceBeforeOnTop = order.totalPrice;
+  let priceBeforeSeasonal = order.totalPrice;
 
   const updateTotalPrice = (updatedPrice: number) => {
     setOrder((prevOrder) => {
@@ -136,16 +139,21 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
             throw new Error('Invalid coupon campaign type');
         }
       });
-      priceBeforeOnTop = Math.max(
-        Math.min(currentPriceBeforeOnTop, order.totalPrice),
-        0
-      );
-      netPrice = Math.max(Math.min(netPrice, order.totalPrice), 0);
+
       return {
         ...prevOrder,
         netPrice,
       };
     });
+    priceBeforeOnTop = Math.max(
+      Math.min(currentPriceBeforeOnTop, order.totalPrice),
+      0
+    );
+    priceBeforeSeasonal = Math.max(
+      Math.min(currentPriceBeforeSeasonal, order.totalPrice),
+      0
+    );
+    netPrice = Math.max(Math.min(netPrice, order.totalPrice), 0);
   };
 
   const addProduct = (product: ProductType) => {
@@ -220,6 +228,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     },
     orderData: {
       priceBeforeOnTop,
+      priceBeforeSeasonal,
     },
   };
 

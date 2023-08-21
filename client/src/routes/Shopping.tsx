@@ -40,6 +40,9 @@ export const Shopping = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleConfirm = () => {
+  };
+
   return (
     <Box sx={{ width: '100%', marginTop: 5 }}>
       <Stepper activeStep={activeStep}>
@@ -89,7 +92,7 @@ export const Shopping = () => {
               <Typography children={'Total Price:'} />
               <Typography children={`${order.totalPrice} baht`} />
             </Box>
-            {activeStep === 1 && (
+            {activeStep > 0 && (
               <>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography children={'Discount:'} />
@@ -110,6 +113,7 @@ export const Shopping = () => {
           activeStep={activeStep}
           handleNext={handleNext}
           handleBack={handleBack}
+          handleConfirm={handleConfirm}
         />
       </Box>
     </Box>
