@@ -1,12 +1,18 @@
 import React from 'react';
-import { Box, Stepper, Step, StepLabel } from '@mui/material';
+import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 import { StepFooter } from '../components/StepFooter';
-import { SelectProducts, SelectCoupons, ConfirmOrder } from '../containers';
+import {
+  SelectProducts,
+  SelectCoupons,
+  ConfirmOrder,
+  useOrderContext,
+} from '../containers';
 
 const steps = ['Pick Products', 'Pick Coupons', 'Confirm Order'];
 
 export const Shopping = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { order, orderActions } = useOrderContext();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -31,15 +37,28 @@ export const Shopping = () => {
           );
         })}
       </Stepper>
+      <Box
+      >
       {activeStep === 0 && <SelectProducts />}
       {activeStep === 1 && <SelectCoupons />}
       {activeStep === 2 && <ConfirmOrder />}
+      </Box>
+      <Box
+      >
+        <Box
+        >
+          <Typography children={`Total Price: ${order.totalPrice} Baht`} />
+          {activeStep === 1 && (
+            <Typography children={`Net Price: ${order.netPrice} Baht`} />
+          )}
+        </Box>
       <StepFooter
         stepsLength={steps.length}
         activeStep={activeStep}
         handleNext={handleNext}
         handleBack={handleBack}
       />
+    </Box>
     </Box>
   );
 };
