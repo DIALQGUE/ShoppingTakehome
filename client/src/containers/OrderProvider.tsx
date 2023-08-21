@@ -11,6 +11,7 @@ import {
   BlockCouponType,
   MAX_POINT_DISCOUNT_PERCENTAGE,
   POINT_TO_DISCOUNT_RATIO,
+  ValidatePointUsedReturnType,
 } from '../utils/types';
 
 const initialOrder = {
@@ -28,6 +29,10 @@ interface OrderContextType {
     removeProduct: (product: ProductType) => void;
     addCoupon: (coupon: CouponType) => void;
     removeCoupon: (coupon: CouponType) => void;
+    validatePointUsed: (
+      currentPrice: number,
+      pointsUsed: number
+    ) => ValidatePointUsedReturnType;
   };
   orderData: {
     priceBeforeOnTop: number;
@@ -41,6 +46,10 @@ const OrderContext = createContext<OrderContextType>({
     removeProduct: () => {},
     addCoupon: () => {},
     removeCoupon: () => {},
+    validatePointUsed: (): ValidatePointUsedReturnType => ({
+      isPointQuotaReached: false,
+      discountedPrice: 0,
+    }),
   },
   orderData: {
     priceBeforeOnTop: 0,
@@ -71,7 +80,6 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     let currentPriceBeforeSeasonal = order.totalPrice;
     let netPrice = order.totalPrice;
     setOrder((prevOrder) => {
-      let currentPrice = prevOrder.totalPrice;
       prevOrder.coupons.forEach((coupon) => {
         switch (coupon.campaign) {
           case CAMPAIGN.FIXED_AMOUNT:
@@ -184,6 +192,23 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     calculateNetPrice();
   };
 
+  const validatePointUsed = (
+    currentPrice: number,
+    pointsUsed: number
+  ): ValidatePointUsedReturnType => {
+    const minimumDiscountedPrice =
+      (currentPrice * MAX_POINT_DISCOUNT_PERCENTAGE) / 100;
+    let discountedPrice = pointsUsed * POINT_TO_DISCOUNT_RATIO;
+    if (discountedPrice > minimumDiscountedPrice) {
+      return {
+        isPointQuotaReached: true,
+        discountedPrice: minimumDiscountedPrice,
+      };
+    } else {
+      return { isPointQuotaReached: false, discountedPrice };
+    }
+  };
+
   const OrderRepository = {
     order,
     orderActions: {
@@ -191,6 +216,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       removeProduct,
       addCoupon,
       removeCoupon,
+      validatePointUsed,
     },
     orderData: {
       priceBeforeOnTop,

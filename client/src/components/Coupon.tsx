@@ -16,6 +16,10 @@ const MAX_USER_POINT = 999;
 
 export const Coupon = (props: CouponProps) => {
   const [pointsUsed, setPointsUsed] = React.useState(0);
+  const [validatPointUsedReturn, setValidatPointUsedReturn] = React.useState({
+    isPointQuotaReached: false,
+    discountedPrice: 0,
+  } as ValidatePointUsedReturnType);
   const { order, orderActions, orderData } = useOrderContext();
   const { coupons } = order;
   const { priceBeforeOnTop } = orderData;
@@ -31,6 +35,11 @@ export const Coupon = (props: CouponProps) => {
       0
     );
     setPointsUsed(cappedPoint);
+    const validatePointUsedreturn = orderActions.validatePointUsed(
+      priceBeforeOnTop,
+      cappedPoint
+    );
+    setValidatPointUsedReturn(validatePointUsedreturn);
   };
 
   const handleChange = (
@@ -78,6 +87,13 @@ export const Coupon = (props: CouponProps) => {
             value={pointsUsed}
             onChange={handlePointsUsedChange}
           />
+          {validatPointUsedReturn.isPointQuotaReached && (
+            <Typography
+              variant={'caption'}
+              sx={{ color: 'red' }}
+              children={`You use points more than max points using quota, you will only discounted for ${validatPointUsedReturn.discountedPrice} baht`}
+            />
+          )}
         </Box>
       )}
     </Box>
