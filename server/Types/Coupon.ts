@@ -2,6 +2,7 @@ import { PRODUCT_CATEGORY } from './Product';
 
 const MINIMUM_BLOCK_SIZE = 10;
 const POINT_TO_DISCOUNT_RATIO = 1;
+export const MAX_POINT_DISCOUNT_PERCENTAGE = 20;
 
 export enum COUPON_CATEGORY {
   COUPON = 'coupon',
@@ -17,7 +18,7 @@ export enum CAMPAIGN {
   BLOCK = 'block',
 }
 
-export const MAX_POINT_DISCOUNT_PERCENTAGE = 20;
+
 
 interface CouponInterface {
   id: number;

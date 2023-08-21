@@ -9,6 +9,8 @@ import {
   PercentageWithCategoryCouponType,
   PointDiscountCouponType,
   BlockCouponType,
+  MAX_POINT_DISCOUNT_PERCENTAGE,
+  POINT_TO_DISCOUNT_RATIO,
 } from '../utils/types';
 
 const initialOrder = {
@@ -27,6 +29,9 @@ interface OrderContextType {
     addCoupon: (coupon: CouponType) => void;
     removeCoupon: (coupon: CouponType) => void;
   };
+  orderData: {
+    priceBeforeOnTop: number;
+  };
 }
 
 const OrderContext = createContext<OrderContextType>({
@@ -37,6 +42,9 @@ const OrderContext = createContext<OrderContextType>({
     addCoupon: () => {},
     removeCoupon: () => {},
   },
+  orderData: {
+    priceBeforeOnTop: 0,
+  },
 });
 
 export const useOrderContext = (): OrderContextType => {
@@ -45,6 +53,7 @@ export const useOrderContext = (): OrderContextType => {
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [order, setOrder] = useState(initialOrder);
+  let priceBeforeOnTop = order.totalPrice;
 
   const updateTotalPrice = (updatedPrice: number) => {
     setOrder((prevOrder) => {
@@ -57,18 +66,26 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const calculateNetPrice = () => {
+    let currentPrice = order.totalPrice;
+    let currentPriceBeforeOnTop = order.totalPrice;
+    let currentPriceBeforeSeasonal = order.totalPrice;
+    let netPrice = order.totalPrice;
     setOrder((prevOrder) => {
       let currentPrice = prevOrder.totalPrice;
       prevOrder.coupons.forEach((coupon) => {
         switch (coupon.campaign) {
           case CAMPAIGN.FIXED_AMOUNT:
             const fixedAmountCoupon = coupon as FixedAmountCouponType;
-            currentPrice = currentPrice - fixedAmountCoupon.amount;
+            currentPriceBeforeOnTop = currentPrice - fixedAmountCoupon.amount;
+            currentPriceBeforeSeasonal = currentPriceBeforeOnTop;
+            netPrice = currentPriceBeforeOnTop;
             break;
           case CAMPAIGN.PERCENTAGE:
             const percentageCoupon = coupon as PercentageCouponType;
-            currentPrice =
+            currentPriceBeforeOnTop =
               currentPrice - (currentPrice * percentageCoupon.percentage) / 100;
+            currentPriceBeforeSeasonal = currentPriceBeforeOnTop;
+            netPrice = currentPriceBeforeOnTop;
             break;
           case CAMPAIGN.PERCENTAGE_WITH_CATEGORY:
             const percentageWithCategoryCoupon =
@@ -82,28 +99,43 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
                 totalCategoryPrice += product.price;
               }
             });
-            currentPrice =
-              currentPrice -
+            currentPriceBeforeSeasonal =
+              currentPriceBeforeOnTop -
               (totalCategoryPrice * percentageWithCategoryCoupon.percentage) /
                 100;
+            netPrice = currentPriceBeforeSeasonal;
             break;
           case CAMPAIGN.POINT_DISCOUNT:
             const pointDiscountCoupon = coupon as PointDiscountCouponType;
-            currentPrice = currentPrice - pointDiscountCoupon.pointsUsed;
+            const { discountedPrice } = validatePointUsed(
+              currentPriceBeforeOnTop,
+              pointDiscountCoupon.pointsUsed
+            );
+            currentPriceBeforeSeasonal =
+              currentPriceBeforeOnTop - discountedPrice;
+            netPrice = currentPriceBeforeSeasonal;
             break;
           case CAMPAIGN.BLOCK:
             const blockCoupon = coupon as BlockCouponType;
-            const blockNumber = Math.floor(currentPrice / blockCoupon.block);
-            currentPrice =
-              currentPrice - blockNumber * blockCoupon.amountPerBlock;
+            const blockNumber = Math.floor(
+              currentPriceBeforeSeasonal / blockCoupon.block
+            );
+            netPrice =
+              currentPriceBeforeSeasonal -
+              blockNumber * blockCoupon.amountPerBlock;
             break;
           default:
             throw new Error('Invalid coupon campaign type');
         }
       });
+      priceBeforeOnTop = Math.max(
+        Math.min(currentPriceBeforeOnTop, order.totalPrice),
+        0
+      );
+      netPrice = Math.max(Math.min(netPrice, order.totalPrice), 0);
       return {
         ...prevOrder,
-        netPrice: currentPrice,
+        netPrice,
       };
     });
   };
@@ -159,6 +191,9 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       removeProduct,
       addCoupon,
       removeCoupon,
+    },
+    orderData: {
+      priceBeforeOnTop,
     },
   };
 

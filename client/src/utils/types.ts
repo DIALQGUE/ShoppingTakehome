@@ -1,3 +1,7 @@
+export const POINT_TO_DISCOUNT_RATIO = 1;
+export const MAX_POINT_DISCOUNT_PERCENTAGE = 20;
+export const POINT_DISCOUNT_COUPON_DESCRIPTION = `Use points to get discount. Every 1 point equals ${POINT_TO_DISCOUNT_RATIO} baht discount, up to ${MAX_POINT_DISCOUNT_PERCENTAGE}% of total price before on top discount.`;
+
 export enum PRODUCT_CATEGORY {
   FASHION = 'Fashion',
   ELECTRONICS = 'Electronics',
@@ -20,7 +24,7 @@ export enum CAMPAIGN {
 }
 
 interface CouponInterface {
-  id: number;
+  id: number | undefined;
   campaign: CAMPAIGN;
   description: string;
   category: COUPON_CATEGORY;
@@ -77,4 +81,9 @@ export type OrderType = {
   coupons: CouponType[];
   totalPrice: number;
   netPrice: number;
+};
+
+export type ValidatePointUsedReturnType = {
+  isPointQuotaReached: boolean;
+  discountedPrice: number;
 };

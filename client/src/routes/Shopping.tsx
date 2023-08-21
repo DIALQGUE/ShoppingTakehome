@@ -13,7 +13,7 @@ import { ProductType, CouponType } from '../utils/types';
 const steps = ['Pick Products', 'Pick Coupons', 'Confirm Order'];
 
 export const Shopping = () => {
-  const { order, orderActions } = useOrderContext();
+  const { order } = useOrderContext();
   const [activeStep, setActiveStep] = useState(0);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
@@ -64,7 +64,7 @@ export const Shopping = () => {
         }}
       >
         {activeStep === 0 && <SelectProducts products={products} />}
-        {activeStep === 1 && <SelectCoupons />}
+        {activeStep === 1 && <SelectCoupons coupons={coupons} />}
         {activeStep === 2 && <ConfirmOrder />}
       </Box>
       <Box
