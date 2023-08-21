@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { FormGroup } from '@mui/material';
+import { Product } from '../components/Product';
 import { ProductType } from 'src/utils/types';
 
 export const SelectProducts = () => {
@@ -13,16 +14,10 @@ export const SelectProducts = () => {
   }, []);
 
   return (
-    <>
-      <FormGroup>
-        {products.map((product) => (
-          <FormControlLabel
-            key={product.id}
-            control={<Checkbox name={product.name} />}
-            label={product.name}
-          />
-        ))}
-      </FormGroup>
-    </>
+    <FormGroup>
+      {products.map((product) => (
+        <Product product={product} />
+      ))}
+    </FormGroup>
   );
 };
