@@ -9,7 +9,7 @@ type SelectProductsProps = {
 };
 
 export const SelectProducts = (props: SelectProductsProps) => {
-  const { order, orderActions } = useOrderContext();
+  const { order } = useOrderContext();
   const { products } = props;
   const { products: selectedProducts } = order;
   return (

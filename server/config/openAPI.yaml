@@ -47,11 +47,10 @@ components:
           items:
             type: number
             description: IDs of selected products
-        couponIds:
+        coupons:
           type: array
           items:
-            type: number
-            description: IDs of selected coupons
+            $ref: '#/components/schemas/couponSchema'
         totalPrice:
           type: number
           description: Tolal price from selected products before discount

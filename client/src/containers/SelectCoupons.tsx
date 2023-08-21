@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import {
   FormGroup,
   Accordion,
@@ -40,8 +37,6 @@ type SelectCouponsProps = {
 
 export const SelectCoupons = (props: SelectCouponsProps) => {
   const { coupons } = props;
-
-  const handleCouponChange = (coupon: CouponType) => {};
 
   return (
     <FormGroup>
