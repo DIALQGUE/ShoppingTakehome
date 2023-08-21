@@ -12,11 +12,12 @@ const CATEGORY_COLOR_MAP = {
 
 type ProductProps = {
   product: ProductType;
+  defaultChecked?: boolean;
 };
 
 export const Product = (props: ProductProps) => {
   const { orderActions } = useOrderContext();
-  const { product } = props;
+  const { product, defaultChecked } = props;
   const { name, price, description, category } = product;
 
   const handleChange = (
@@ -27,6 +28,7 @@ export const Product = (props: ProductProps) => {
       ? orderActions.addProduct(product)
       : orderActions.removeProduct(product);
   };
+  console.log(defaultChecked);
 
   return (
     <Box
@@ -46,9 +48,11 @@ export const Product = (props: ProductProps) => {
         <Typography children={description} />
         <Typography children={category} />
       </Box>
-      <Box>
-        <Checkbox name={product.name} onChange={handleChange} />
-      </Box>
+      <Checkbox
+        name={product.name}
+        onChange={handleChange}
+        defaultChecked={defaultChecked}
+      />
     </Box>
   );
 };

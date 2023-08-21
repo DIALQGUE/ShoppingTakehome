@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 import { StepFooter } from '../components/StepFooter';
 import {
@@ -7,12 +8,29 @@ import {
   ConfirmOrder,
   useOrderContext,
 } from '../containers';
+import { ProductType, CouponType } from '../utils/types';
 
 const steps = ['Pick Products', 'Pick Coupons', 'Confirm Order'];
 
 export const Shopping = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
   const { order, orderActions } = useOrderContext();
+  const [activeStep, setActiveStep] = useState(0);
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [coupons, setCoupons] = useState<CouponType[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/products').then((res) => {
+      const fetchedProducts = res.data;
+      setProducts(fetchedProducts);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/coupons').then((res) => {
+      const fetchedCoupons = res.data;
+      setCoupons(fetchedCoupons);
+    });
+  }, []);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -42,10 +60,10 @@ export const Shopping = () => {
           paddingLeft: 5,
           paddingRight: 5,
           paddingTop: 5,
-          mb: 10,
+          mb: 15,
         }}
       >
-        {activeStep === 0 && <SelectProducts />}
+        {activeStep === 0 && <SelectProducts products={products} />}
         {activeStep === 1 && <SelectCoupons />}
         {activeStep === 2 && <ConfirmOrder />}
       </Box>
@@ -66,10 +84,26 @@ export const Shopping = () => {
             flexDirection: 'column',
           }}
         >
-          <Typography children={`Total Price: ${order.totalPrice} Baht`} />
-          {activeStep === 1 && (
-            <Typography children={`Net Price: ${order.netPrice} Baht`} />
-          )}
+          <Box sx={{ width: 200 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography children={'Total Price:'} />
+              <Typography children={`${order.totalPrice} Baht`} />
+            </Box>
+            {activeStep === 1 && (
+              <>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography children={'Discount:'} />
+                  <Typography
+                    children={`${order.netPrice - order.totalPrice} Baht`}
+                  />
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography children={'Net Price:'} />
+                  <Typography children={`${order.netPrice} Baht`} />
+                </Box>
+              </>
+            )}
+          </Box>
         </Box>
         <StepFooter
           stepsLength={steps.length}
