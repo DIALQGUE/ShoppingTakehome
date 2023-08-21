@@ -12,8 +12,6 @@ export const SelectProducts = (props: SelectProductsProps) => {
   const { order, orderActions } = useOrderContext();
   const { products } = props;
   const { products: selectedProducts } = order;
-  console.log(products);
-  console.log(selectedProducts);
   return (
     <FormGroup>
       {products.map((product) => (

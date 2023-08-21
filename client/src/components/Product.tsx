@@ -28,7 +28,6 @@ export const Product = (props: ProductProps) => {
       ? orderActions.addProduct(product)
       : orderActions.removeProduct(product);
   };
-  console.log(defaultChecked);
 
   return (
     <Box
@@ -44,7 +43,7 @@ export const Product = (props: ProductProps) => {
     >
       <Box>
         <Typography children={name} />
-        <Typography children={`${price} Baht`} />
+        <Typography children={`${price} baht`} />
         <Typography children={description} />
         <Typography children={category} />
       </Box>

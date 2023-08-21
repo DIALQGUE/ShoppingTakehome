@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
-import { StepFooter } from '../components/StepFooter';
+import { StepFooter } from '../components';
 import {
   SelectProducts,
   SelectCoupons,
@@ -87,19 +87,19 @@ export const Shopping = () => {
           <Box sx={{ width: 200 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography children={'Total Price:'} />
-              <Typography children={`${order.totalPrice} Baht`} />
+              <Typography children={`${order.totalPrice} baht`} />
             </Box>
             {activeStep === 1 && (
               <>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography children={'Discount:'} />
                   <Typography
-                    children={`${order.netPrice - order.totalPrice} Baht`}
+                    children={`${order.netPrice - order.totalPrice} baht`}
                   />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography children={'Net Price:'} />
-                  <Typography children={`${order.netPrice} Baht`} />
+                  <Typography children={`${order.netPrice} baht`} />
                 </Box>
               </>
             )}
