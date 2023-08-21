@@ -23,7 +23,7 @@ export const Shopping = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: 5 }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -38,27 +38,46 @@ export const Shopping = () => {
         })}
       </Stepper>
       <Box
+        sx={{
+          paddingLeft: 5,
+          paddingRight: 5,
+          paddingTop: 5,
+          mb: 10,
+        }}
       >
-      {activeStep === 0 && <SelectProducts />}
-      {activeStep === 1 && <SelectCoupons />}
-      {activeStep === 2 && <ConfirmOrder />}
+        {activeStep === 0 && <SelectProducts />}
+        {activeStep === 1 && <SelectCoupons />}
+        {activeStep === 2 && <ConfirmOrder />}
       </Box>
       <Box
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: 1,
+          'background-color': 'lightgray',
+        }}
       >
         <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            flexDirection: 'column',
+          }}
         >
           <Typography children={`Total Price: ${order.totalPrice} Baht`} />
           {activeStep === 1 && (
             <Typography children={`Net Price: ${order.netPrice} Baht`} />
           )}
         </Box>
-      <StepFooter
-        stepsLength={steps.length}
-        activeStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
-      />
-    </Box>
+        <StepFooter
+          stepsLength={steps.length}
+          activeStep={activeStep}
+          handleNext={handleNext}
+          handleBack={handleBack}
+        />
+      </Box>
     </Box>
   );
 };

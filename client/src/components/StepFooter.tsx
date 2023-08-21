@@ -11,7 +11,13 @@ export const StepFooter = (props: StepFooterProps) => {
   const { stepsLength, activeStep, handleNext, handleBack } = props;
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
         <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
           Back
         </Button>
