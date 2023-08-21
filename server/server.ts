@@ -64,9 +64,8 @@ app.get('/coupons/:id', (req: Request, res: Response) => {
 });
 
 app.post('/checkout', (req: Request, res: Response) => {
-  const { productIds, couponIds, totalPrice, netPrice } = req.body;
+  const { productIds, coupons, totalPrice, netPrice } = req.body;
   const products = productsRepository.getProductsByIds(productIds);
-  const coupons = couponRepository.getCouponsByIds(couponIds);
   const order = orderRepository.addOrder({
     id: undefined,
     products,

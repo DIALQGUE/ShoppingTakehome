@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 import { StepFooter } from '../components';
@@ -17,6 +18,7 @@ export const Shopping = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:5000/products').then((res) => {
@@ -41,6 +43,18 @@ export const Shopping = () => {
   };
 
   const handleConfirm = () => {
+    const requestBody = {
+      productIds: order.products.map((product) => product.id),
+      coupons: order.coupons,
+      totalPrice: order.totalPrice,
+      netPrice: order.netPrice,
+    };
+    axios
+      .post('http://localhost:5000/checkout', { ...requestBody })
+      .then((res) => {
+        console.log(res.data);
+        navigate('/success', { replace: true });
+      });
   };
 
   return (

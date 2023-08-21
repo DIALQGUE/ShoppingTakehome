@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Shopping } from './routes';
+import { Home, Shopping, Success } from './routes';
 import { OrderProvider } from './containers';
 
 const Router = () => {
@@ -16,6 +16,7 @@ const Router = () => {
             </OrderProvider>
           }
         />
+        <Route path="/success" element={<Success />} />
       </Routes>
     </BrowserRouter>
   );

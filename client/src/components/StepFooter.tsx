@@ -4,11 +4,13 @@ type StepFooterProps = {
   stepsLength: number;
   activeStep: number;
   handleNext: () => void;
+  handleConfirm: () => void;
   handleBack: () => void;
 };
 
 export const StepFooter = (props: StepFooterProps) => {
-  const { stepsLength, activeStep, handleNext, handleBack } = props;
+  const { stepsLength, activeStep, handleNext, handleBack, handleConfirm } =
+    props;
   return (
     <>
       <Box
@@ -22,9 +24,11 @@ export const StepFooter = (props: StepFooterProps) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button disabled={activeStep === stepsLength - 1} onClick={handleNext}>
-          Next
-        </Button>
+        {activeStep < stepsLength - 1 ? (
+          <Button onClick={handleNext}>Next</Button>
+        ) : (
+          <Button onClick={handleConfirm}>Confirm</Button>
+        )}
       </Box>
     </>
   );
